@@ -2,9 +2,7 @@
 require 'docking_station'
 
 describe DockingStation do
-	it "responds to release_bike" do
-		expect(subject).to respond_to :release_bike
-	end
+	
 
 	# it "returns a working bike" do
 	# 	bike = subject.release_bike
@@ -40,6 +38,18 @@ describe DockingStation do
 		it 'raises an error when there are no bikes available' do
 			expect { subject.release_bike }.to raise_error 'No bikes available'
 		end
+
+		it "responds to release_bike" do
+		expect(subject).to respond_to :release_bike
+	    end
+	end
+
+	describe '#dock' do
+		it 'Raises an error if we try to exceed bike docking capacity' do
+			expect {
+			  subject.dock(Bike.new)
+			  subject.dock(Bike.new)}.to raise_error 'Exceeded capacity'
+			end
 	end
 end	
 
