@@ -40,17 +40,6 @@ describe DockingStation do
 		expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
 	end
 
-	it "responds to #garage" do
-		expect(subject).to respond_to :garage
-	end
-
-	describe '#garage' do
-		it 'responds to #storage' do
-
-			expect(subject.garage).to eq storage
-		end
-	end
-
 	describe '#release_bike' do
 		it 'raises an error when there are no bikes available' do
 			expect { subject.release_bike }.to raise_error 'No bikes available'

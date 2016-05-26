@@ -1,4 +1,5 @@
 require_relative 'bike'
+require_relative 'garage'
 
 class DockingStation
 
@@ -8,7 +9,6 @@ attr_reader :capacity, :storage
 def initialize(capacity = DEFAULT_CAPACITY)
 	@bikes = []
 	@capacity = capacity
-	@storage = []
 end
 # in this case, @bike is actually 'nil' - which EVALUATES to 'false' (falsey)
 def release_bike
@@ -20,10 +20,6 @@ end
 def dock(bike)
 	fail 'Exceeded capacity' if full?
 	bikes << bike
-end
-
-def garage
-	storage
 end
 
 private
