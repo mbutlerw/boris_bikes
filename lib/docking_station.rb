@@ -12,6 +12,7 @@ end
 # in this case, @bike is actually 'nil' - which EVALUATES to 'false' (falsey)
 def release_bike
 	fail 'No bikes available' if empty?
+	fail "Bike is broken." unless bikes.last.working?
 	bikes.pop
 end
 
