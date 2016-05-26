@@ -3,10 +3,13 @@ require 'docking_station'
 
 describe DockingStation do
 
+	let(:bike) {double :bike} 
+
+
 
 	it "returns a working bike" do
-		bike = Bike.new
-		expect(bike).to be_working
+		allow(bike).to receive(:working?).and_return true
+		#expect(double(:bike)).to be_working
 	end
 
 	it "responds to dock" do
@@ -14,8 +17,8 @@ describe DockingStation do
 	end
 
 	it "Docks a bike when passed one" do
-		bike = Bike.new
-		expect(subject.dock(bike).last).to eq bike
+		allow(bike).to receive(:dock)
+		expect(subject.dock(double(:bike)).last).to eq bike
 	end
 
 	it "it can't respond to bike" do
@@ -23,15 +26,15 @@ describe DockingStation do
 	end
 
 	it "doesn't dock a bike" do
-		bike = Bike.new
+		
 
-		expect(subject.dock(bike)).not_to eq bike
+		expect(subject.dock(double(:bike))).not_to eq bike
 	end
 
 	it "releases a previously docked bike" do
-		bike_inst = Bike.new
-		subject.dock(bike_inst)
-		expect(subject.release_bike).to eq bike_inst
+		allow(bike).to receive(:working?).and_return true
+		subject.dock(double(:bike))
+		expect(subject.release_bike).to eq bike
 	end
 
 	it "responds to capacity" do
@@ -52,9 +55,9 @@ describe DockingStation do
 	    end
 
 		it "does not release broken bikes" do
-			bike = Bike.new
-			bike.broken?
-			subject.dock(bike)
+			allow(bike).to receive(:broken?)
+			double(:bike).broken?
+			subject.dock(double(:bike))
 			expect{subject.release_bike}.to raise_error "Bike is broken."
 		end
 
@@ -62,8 +65,8 @@ describe DockingStation do
 
 	describe '#dock' do
 		it 'Raises an error if we try to exceed bike docking capacity' do
-			DockingStation::DEFAULT_CAPACITY.times{subject.dock(Bike.new)}
-			expect {subject.dock(Bike.new)}.to raise_error "Exceeded capacity"
+			subject.capacity.times{subject.dock(double(:bike))}
+			expect {subject.dock(double(:bike))}.to raise_error "Exceeded capacity"
 			end
 	end
 end
