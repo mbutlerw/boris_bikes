@@ -58,11 +58,6 @@ describe DockingStation do
 			expect{subject.release_bike}.to raise_error "Bike is broken."
 		end
 
-
-
-
-
-
 	end
 
 	describe '#dock' do
