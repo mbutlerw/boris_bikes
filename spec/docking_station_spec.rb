@@ -3,7 +3,7 @@ require 'docking_station'
 
 describe DockingStation do
 
-		let(:bike) {double :bike}
+	let(:bike) {double :bike}
 
 	it "returns a working bike" do
 		allow(bike).to receive(:working?).and_return true
@@ -38,6 +38,17 @@ describe DockingStation do
 
 	it "returns default capacity" do
 		expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+	end
+
+	it "responds to #garage" do
+		expect(subject).to respond_to :garage
+	end
+
+	describe '#garage' do
+		it 'responds to #storage' do
+
+			expect(subject.garage).to eq storage
+		end
 	end
 
 	describe '#release_bike' do
