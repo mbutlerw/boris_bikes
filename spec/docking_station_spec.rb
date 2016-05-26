@@ -2,10 +2,11 @@
 require 'docking_station'
 
 describe DockingStation do
-	
+
+
 
 	it "returns a working bike" do
-		bike = subject.release_bike
+		bike = Bike.new
 		expect(bike).to be_working
 	end
 
@@ -27,7 +28,7 @@ describe DockingStation do
 		subject.dock(bike)
 		expect(subject.bike).to eq bike
 	end
-	
+
 	it "releases a previously docked bike" do
 		bike_inst = Bike.new
 		subject.dock(bike_inst)
@@ -51,7 +52,7 @@ describe DockingStation do
 			  subject.dock(Bike.new)}.to raise_error 'Exceeded capacity'
 			end
 	end
-end	
+end
 
 # As a member of the public,
 # So that I am not confused and charged unnecessarily,
