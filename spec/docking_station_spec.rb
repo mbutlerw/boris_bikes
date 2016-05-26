@@ -2,7 +2,7 @@
 require 'docking_station'
 
 describe DockingStation do
-
+	
 
 	it "returns a working bike" do
 		bike = Bike.new
@@ -18,20 +18,28 @@ describe DockingStation do
 		expect(subject.dock(bike).last).to eq bike
 	end
 
-	it "responds to bike" do
-		expect(subject).to respond_to :bikes
+	it "it can't respond to bike" do
+		expect(subject).not_to respond_to :bikes
 	end
 
-	it "returns docked bikes" do
+	it "doesn't dock a bike" do
 		bike = Bike.new
-		subject.dock(bike)
-		expect(subject.bikes.last).to eq bike
+		
+		expect(subject.dock(bike)).not_to eq bike
 	end
 
 	it "releases a previously docked bike" do
 		bike_inst = Bike.new
 		subject.dock(bike_inst)
 		expect(subject.release_bike).to eq bike_inst
+	end
+
+	it "responds to capacity" do
+		expect(subject).to respond_to :capacity
+	end
+
+	it "returns default capacity" do
+		expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
 	end
 
 	describe '#release_bike' do
@@ -46,7 +54,7 @@ describe DockingStation do
 
 	describe '#dock' do
 		it 'Raises an error if we try to exceed bike docking capacity' do
-			20.times{subject.dock(Bike.new)}
+			DockingStation::DEFAULT_CAPACITY.times{subject.dock(Bike.new)}
 			expect {subject.dock(Bike.new)}.to raise_error "Exceeded capacity"
 			end
 	end
