@@ -4,10 +4,10 @@ require 'docking_station'
 describe DockingStation do
 	
 
-	# it "returns a working bike" do
-	# 	bike = subject.release_bike
-	# 	expect(bike).to be_working
-	# end
+	it "returns a working bike" do
+		bike = subject.release_bike
+		expect(bike).to be_working
+	end
 
 	it "responds to dock" do
 		expect(subject).to respond_to(:dock).with(1).argument
