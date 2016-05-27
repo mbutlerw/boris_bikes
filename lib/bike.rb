@@ -1,10 +1,22 @@
 class Bike
-	attr_accessor :is_working
-	def initialize(working = true)
-		@is_working = working
-	end
 
-	def working?
-		@is_working
-	end
+   
+
+   def initialize(status = true)
+	 @working = status
+   end
+
+   def report_broken
+	 @working = false
+   end
+
+   def working?
+   	@working
+   end
+
+   def fix
+   	@working = true
+   end
+
+
 end

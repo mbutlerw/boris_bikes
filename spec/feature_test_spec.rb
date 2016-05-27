@@ -1,24 +1,21 @@
-require 'bike'
-require 'van'
-require 'garage'
 require 'docking_station'
+require 'van'
 
-describe "feature test" do
-  it "works" do
-    station = DockingStation.new
-    bike1 = Bike.new(false)
-    station.dock(bike1)
-    broken_bikes = station.release_all_broken_bikes
-    van1 = Van.new
-    van1.pickup(broken_bikes)
-    unloaded_broken_bikes = van1.dropoff_all
-    garage1 = Garage.new
-    garage1.receive(unloaded_broken_bikes)
-    garage1.fix_bikes
-    fixed_bikes = garage1.give_all
-    van2 = Van.new
-    van2.pickup(fixed_bikes)
-    unloaded_fixed_bikes = van2.dropoff_all
-    station.receive(unloaded_fixed_bikes)
-  end
+describe "Feature test" do
+	it "works" do
+		station = DockingStation.new
+		5.times {station.dock(Bike.new(false))}
+		5.times {station.dock(Bike.new)}
+		broken_bike = station.release_bike
+		van1 = Van.new
+		van1.load(broken_bike)
+		unloaded_broken_bike = van1.unload
+		garage1 = Garage.new
+		garage1.accept(unloaded_broken_bike)
+		fixed_bike = garage1.release_bike
+		van2 = Van.new
+		van2.load(fixed_bike)
+		unloaded_fixed_bike = van2.unload
+		station.dock(unloaded_fixed_bike)
+	end
 end

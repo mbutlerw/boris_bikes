@@ -1,24 +1,18 @@
+require_relative 'bike_container'
+
 class Van
+	include BikeContainer 
 
-  def initialize
-    @stored = []
-  end
+	def load(bike)
+		add_bike(bike)
+	end
 
-  def pickup(things_to_pickup)
-    stored.concat(things_to_pickup)
-  end
+	def unload
+		release_bike
+	end
 
-  def dropoff_all
-     sum = []
-     stored.size.times{ sum << release_item}
-     sum
-  end
+	private
 
-  private
+	attr_reader :bikes
 
-  attr_reader :stored
-
-  def release_item
-    stored.pop
-  end
 end
