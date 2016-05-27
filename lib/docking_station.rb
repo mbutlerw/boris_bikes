@@ -5,7 +5,7 @@ require_relative 'bike_container'
 
 
 class DockingStation
-	include BikeContainer 
+	include BikeContainer
 
 
 # in this case, @bike is actually 'nil' - which EVALUATES to 'false' (falsey)

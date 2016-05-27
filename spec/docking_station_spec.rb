@@ -3,12 +3,12 @@ require 'docking_station'
 
 describe DockingStation do
 
-	
-		let(:bike) {double "fish", working?: true} 
+
+		let(:bike) {double :bike, working?: true}
 		let(:broken_bike)  {double :bike, working?: false}
 
-		
-	
+
+
 	describe '#release_bike' do
 		it 'raises an error when there are no bikes available' do
 			expect { subject.release_bike }.to raise_error 'No bikes available'
@@ -19,19 +19,14 @@ describe DockingStation do
 		expect(subject).to respond_to :release_bike
 	    end
 
-		it "does not release broken bikes" do
-			
-			subject.dock(broken_bike)
-			expect{subject.release_bike}.to raise_error "Bike is broken."
-		end
 
 	end
 
-	describe "#release_broken_bikes" do
-		it "releases all the broken bikes" do
+	describe "#release_broken_bike" do
+		it "releases a broken_bike" do
 			 10.times{subject.dock(bike)}
 			 10.times{subject.dock(broken_bike)}
-			 expect(subject.release_broken_bikes).to eq [broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike]
+			 expect(subject.release_broken_bike).to eq broken_bike
 		end
 	end
 
@@ -44,20 +39,16 @@ describe DockingStation do
 		it 'Raises an error if we try to exceed bike docking capacity' do
 			subject = DockingStation.new(5)
 			5.times{subject.dock(bike)}
-			expect {subject.dock(bike)}.to raise_error "Exceeded capacity"
+			expect {subject.dock(bike)}.to raise_error "DockingStation is full"
 		end
 
 
-		it "Docks a working bike at the end of the array" do
+		it "Docks and releases a bike" do
 			subject.dock(broken_bike)
 			subject.dock(bike)
 			expect(subject.release_bike).to eq bike
 		end
 
-		it "Docks a broken bike at the beginning of the array" do
-			subject.dock(bike)
-			expect(subject.dock(broken_bike).first).to eq broken_bike
-		end
 	end
 end
 
