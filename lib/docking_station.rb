@@ -5,7 +5,7 @@ require_relative 'bike'
 class DockingStation
 
 DEFAULT_CAPACITY = 20
-attr_reader :capacity, :storage
+#attr_reader :
 
 def initialize(capacity = DEFAULT_CAPACITY)
 	@bikes = []
@@ -20,12 +20,13 @@ end
 
 def dock(bike)
 	fail 'Exceeded capacity' if full?
-	bikes << bike
+
+	bike.working? ? bikes << bike : bikes.unshift(bike)
 end
 
 private
 
-attr_reader :bikes
+attr_reader :bikes ,:capacity
 
 def full?
 	return bikes.length >= capacity

@@ -3,42 +3,15 @@ require 'docking_station'
 
 describe DockingStation do
 
-	let(:bike) {double :bike}
+	
+		let(:bike) {double :bike, working?: true} 
+		let(:broken_bike)  {double :bike, working?: false}
+	
 
-	it "returns a working bike" do
-		allow(bike).to receive(:working?).and_return true
-		expect(bike).to be_working
-	end
+	
 
-	it "responds to dock" do
-		expect(subject).to respond_to(:dock).with(1).argument
-	end
 
-	it "Docks a bike when passed one" do
-		expect(subject.dock(bike).last).to eq bike
-	end
-
-	it "it can't respond to bike" do
-		expect(subject).not_to respond_to :bikes
-	end
-
-	it "doesn't dock a bike" do
-		expect(subject.dock(double(:bike))).not_to eq bike
-	end
-
-	it "releases a previously docked bike" do
-		allow(bike).to receive(:working?).and_return true
-		subject.dock(bike)
-		expect(subject.release_bike).to eq bike
-	end
-
-	it "responds to capacity" do
-		expect(subject).to respond_to :capacity
-	end
-
-	it "returns default capacity" do
-		expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
-	end
+	
 
 	describe '#release_bike' do
 		it 'raises an error when there are no bikes available' do
@@ -50,18 +23,36 @@ describe DockingStation do
 	    end
 
 		it "does not release broken bikes" do
-			bike = double(:bike, working?: false)
-			subject.dock(bike)
+			
+			subject.dock(broken_bike)
 			expect{subject.release_bike}.to raise_error "Bike is broken."
 		end
 
 	end
 
 	describe '#dock' do
+
+		it "responds to dock" do
+			expect(subject).to respond_to(:dock).with(1).argument
+		end
+
 		it 'Raises an error if we try to exceed bike docking capacity' do
-			subject.capacity.times{subject.dock(double(:bike))}
-			expect {subject.dock(double(:bike))}.to raise_error "Exceeded capacity"
-			end
+			subject = DockingStation.new(5)
+			5.times{subject.dock(bike)}
+			expect {subject.dock(bike)}.to raise_error "Exceeded capacity"
+		end
+
+
+		it "Docks a working bike at the end of the array" do
+			subject.dock(broken_bike)
+			subject.dock(bike)
+			expect(subject.release_bike).to eq bike
+		end
+
+		it "Docks a broken bike at the beginning of the array" do
+			subject.dock(bike)
+			expect(subject.dock(broken_bike).first).to eq broken_bike
+		end
 	end
 end
 
