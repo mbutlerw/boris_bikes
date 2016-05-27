@@ -4,18 +4,15 @@ require 'docking_station'
 describe DockingStation do
 
 	
-		let(:bike) {double :bike, working?: true} 
+		let(:bike) {double "fish", working?: true} 
 		let(:broken_bike)  {double :bike, working?: false}
+
+		
 	
-
-	
-
-
-	
-
 	describe '#release_bike' do
 		it 'raises an error when there are no bikes available' do
 			expect { subject.release_bike }.to raise_error 'No bikes available'
+			p "#{bike}"
 		end
 
 		it "responds to release_bike" do
@@ -28,6 +25,14 @@ describe DockingStation do
 			expect{subject.release_bike}.to raise_error "Bike is broken."
 		end
 
+	end
+
+	describe "#release_broken_bikes" do
+		it "releases all the broken bikes" do
+			 10.times{subject.dock(bike)}
+			 10.times{subject.dock(broken_bike)}
+			 expect(subject.release_broken_bikes).to eq [broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike,broken_bike]
+		end
 	end
 
 	describe '#dock' do

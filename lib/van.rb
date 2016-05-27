@@ -1,10 +1,18 @@
-require_relative 'garage'
-require_relative 'docking_station'
+require_relative 'bike_container'
 
 class Van
-	def receives_bikes(bikes)
+	include BikeContainer 
+
+	def load(bike)
+		add_bike(bike)
 	end
 
-	def delivers_bikes(bikes)
+	def unload
+		release_bike
 	end
+
+	private
+
+	attr_reader :bikes
+
 end
