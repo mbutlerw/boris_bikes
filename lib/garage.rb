@@ -1,4 +1,5 @@
 
+
 class Garage
 
   def fix(bike)
