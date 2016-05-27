@@ -3,14 +3,14 @@ module BikeContainer
 	#has a capacity
 	#receives bikes
 	#releases bikes
-  DEFAULT_CAPACITY = 20	
+  DEFAULT_CAPACITY = 20
 
   def initialize(capacity = DEFAULT_CAPACITY)
   	@capacity = capacity
   	@bikes = []
   end
 
-  def release_bikes
+  def release_bike
   	raise "#{self.class.name} is empty" if empty?
   	bikes.pop
   end
